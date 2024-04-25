@@ -1,6 +1,6 @@
 ﻿namespace ClassProject002;
 
-public class Appoitment
+public class Appointment
 {
     public int Id {get; set;}
     public DateTime dateTime {get; set;}
