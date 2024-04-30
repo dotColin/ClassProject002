@@ -2,19 +2,18 @@
 
 public class Customer
 {
-    public int Id {get; set;}
-    public String FirstName {get; set;}
-    public String LastName {get; set;}
+    private static int autoIncrement;
+    public int Id {get;}
     public String Username {get; set;}
     public String Password {get; set;}
+    public String FirstName {get; set;}
+    public String LastName {get; set;}
 
-    public Customer(int Id, String FirstName,String LastName,String Username,String Password)
+    public Customer()
     {
-        this.Id = Id;
-        this.FirstName = FirstName;
-        this.LastName = LastName;
-        this.Username = Username;
-        this.Password = Password;
+        autoIncrement++;
+        Id = autoIncrement;
     }
+
 
 }
