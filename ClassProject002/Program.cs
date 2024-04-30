@@ -11,23 +11,29 @@ public class Program
     private static List<CustomerAppointment> customerAppointments;
     private static Customer authenticatedCustomer;
 
-    static void Main(String[] args)
+    static void Main(string[] args)
     {
-        System.Console.WriteLine("Initializing");
+        Console.WriteLine("Initializing...");
         Initialize();
         Menu();
     }
 
     static void Initialize()
     {
-        var c1 = new Customer()
+        var c1 = new Customer
         {
-            FirstName = "Kambiz", LastName = "Saffari", Username = "kambiz", Password = "1234"
+            FirstName = "Kambiz",
+            LastName = "Saffari",
+            Username = "kambiz",
+            Password = "1234"
         };
 
-        var c2 = new Customer()
+        var c2 = new Customer
         {
-            FirstName = "Jeremy", LastName = "Lee", Username = "jlee", Password = "5678"
+            FirstName = "Jeremy",
+            LastName = "Lee",
+            Username = "jlee",
+            Password = "9876"
         };
 
         var a1 = new Appointment();
@@ -47,6 +53,7 @@ public class Program
         customerAppointments.Add(ca2);
         customerAppointments.Add(ca3);
 
+        appointments = new List<Appointment>();
         appointments.Add(a1);
         appointments.Add(a2);
         appointments.Add(a3);
@@ -56,103 +63,114 @@ public class Program
     static void Menu()
     {
         bool done = false;
+
         while (!done)
         {
-            System.Console.WriteLine("Options: Login: 1, Logout: 2, Sign Up: 3, Appointments: 4, Quit: 5");
-            System.Console.Write("Choice: ");
-            String choice = Console.ReadLine();
+            Console.WriteLine("Options: Login: 1, Logout: 2, Sign Up: 3, Appointments: 4, Quit: q");
+            Console.Write("Choice: ");
+            string choice = Console.ReadLine();
+
             switch(choice)
             {
                 case "1":
                     LoginMenu();
                     break;
                 case "2":
-                    Logout();
+                    LogOutMenu();
                     break;
                 case "3":
                     SignUpMenu();
                     break;
                 case "4":
-                    ViewAppointments();
+                    AppointmentsMenu();
                     break;
                 case "q":
                     done = true;
                     break;
                 default:
-                    System.Console.WriteLine("Invalid Command");
+                    Console.WriteLine("Invalid command!");
                     break;
             }
+
         }
+
+
     }
 
     static void LoginMenu()
     {
-        if (authenticatedCustomer == null)
+        if(authenticatedCustomer == null)
         {
-            System.Console.WriteLine("Enter username:");
-            String username = Console.ReadLine();
-            System.Console.WriteLine("Enter password:");
-            String password = Console.ReadLine();
+            Console.Write("Enter your username: ");
+            string username = Console.ReadLine();
+            Console.Write("Enter your password: ");
+            string password = Console.ReadLine();
+
             authenticatedCustomer = customers.Authenticate(username, password);
             if (authenticatedCustomer != null)
             {
-                System.Console.WriteLine($"Welcome {authenticatedCustomer.FirstName}");
+                Console.WriteLine($"Welcome {authenticatedCustomer.FirstName}");
             }
             else
             {
-                System.Console.WriteLine("Invalid username or password");
+                Console.WriteLine("Invalid username or password");
             }
         }
-        
+
+
     }
 
-    static void Logout()
+    static void LogOutMenu()
     {
         authenticatedCustomer = null;
-        System.Console.WriteLine("Logged out");
+        Console.WriteLine("Logged out!");
     }
 
     static void SignUpMenu()
     {
-        System.Console.WriteLine("Enter first name");
-        String firstname = Console.ReadLine();
-        System.Console.WriteLine("Enter last name");
-        String lastname = Console.ReadLine();
-        System.Console.WriteLine("Enter username");
-        String username = Console.ReadLine();
-        System.Console.WriteLine("Enter password");
-        String password = Console.ReadLine();
+        Console.Write("First Name: ");
+        string firstname = Console.ReadLine();
+        Console.Write("Last Name: ");
+        string lastname = Console.ReadLine();
+        Console.Write("Username: ");
+        string username = Console.ReadLine();
+        Console.Write("Password: ");
+        string password = Console.ReadLine();
 
         var newCustomer = new Customer
         {
-            FirstName = firstname
-            LastName = lastname
-            Username = username
+            FirstName = firstname,
+            LastName = lastname,
+            Username = username,
             Password = password
         };
         customers.customerList.Add(newCustomer);
-        System.Console.WriteLine("Profile Created");
+        Console.WriteLine("Profile created!");
+        
     }
 
-    static void ViewAppointments()
+    static void AppointmentsMenu()
     {
         if (authenticatedCustomer == null)
         {
-            System.Console.WriteLine("Please log in first");
+            Console.WriteLine("Please log in first!");
             return;
         }
-        var appointmentList = customerAppointments.Where(o => o.c.Username == authenticatedCustomer);
 
-        if (appointmentList.Count() == 0)
+        var appointmentList = customerAppointments.Where(o => o.c.Username == authenticatedCustomer.Username);
+
+        if(appointmentList.Count() == 0)
         {
-            System.Console.WriteLine("Zero Appointments Found");
+            Console.WriteLine("0 appointments found.");
         }
         else
         {
             foreach(var appointment in appointmentList)
             {
-                System.Console.WriteLine(appointment.a.dateTime);
+                Console.WriteLine(appointment.a.dateTime);
             }
         }
+        
     }
+
 }

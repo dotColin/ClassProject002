@@ -2,7 +2,7 @@
 
 public class Customers
 {
-    public List<Customer> customerList { get; set; }
+    public List<Customer> customerList {get; set;}
 
     public Customers()
     {
@@ -13,7 +13,7 @@ public class Customers
     {
         var c = customerList.Where(o => (o.Username == username) && (o.Password == password));
 
-        if(c.Count() > 0)
+        if (c.Count() > 0)
         {
             return c.First();
         }
@@ -21,5 +21,8 @@ public class Customers
         {
             return null;
         }
+
     }
+
+
 }

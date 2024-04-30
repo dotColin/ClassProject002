@@ -2,8 +2,14 @@
 
 public class Appointment
 {
-    public int Id {get; set;}
+    private static int autoIncrement;
+    public int Id {get;}
     public DateTime dateTime {get; set;}
-    public string Description {get; set;}   
+
+    public Appointment()
+    {
+        autoIncrement++;
+        Id = autoIncrement;
+    }
 
 }
