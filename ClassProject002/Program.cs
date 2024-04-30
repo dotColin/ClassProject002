@@ -1,8 +1,4 @@
-﻿using System.ComponentModel.Design;
-using System.Runtime.CompilerServices;
-using System.Runtime.ExceptionServices;
-
-namespace ClassProject002;
+﻿namespace ClassProject002;
 
 public class Program
 {
