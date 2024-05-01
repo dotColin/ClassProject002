@@ -9,8 +9,10 @@ public class Program
 
     static void Main(string[] args)
     {
-        Console.WriteLine("Initializing Room Reservation System...");
+        System.Console.WriteLine("Initializing Room Reservation System...");
+        System.Console.WriteLine("Version 1.9 of V.A.C.S Room Information System");
         Initialize();
+        System.Console.WriteLine("Loading Menu...");
         Menu();
     }
 
@@ -18,18 +20,18 @@ public class Program
     {
         var c1 = new Customer
         {
-            FirstName = "Kambiz",
-            LastName = "Saffari",
-            Username = "kambiz",
+            FirstName = "Vincent",
+            LastName = "Herff",
+            Username = "vherff",
             Password = "1234"
         };
 
         var c2 = new Customer
         {
-            FirstName = "Jeremy",
-            LastName = "Lee",
-            Username = "jlee",
-            Password = "9876"
+            FirstName = "Alex",
+            LastName = "Armendariz",
+            Username = "alex",
+            Password = "5678"
         };
 
         var a1 = new Appointment();
@@ -53,20 +55,17 @@ public class Program
         appointments.Add(a1);
         appointments.Add(a2);
         appointments.Add(a3);
-
     }
 
     static void Menu()
     {
         System.Console.WriteLine("Welcome to the library room reservation system!");
         bool done = false;
-
         while (!done)
         {
             Console.WriteLine("Options: Login: 1, Logout: 2, Sign Up: 3, Room Reservations: 4, Make Reservation: 5, Quit: q");
             Console.Write("Choice: ");
             string choice = Console.ReadLine();
-
             switch(choice)
             {
                 case "1":
@@ -91,10 +90,7 @@ public class Program
                     Console.WriteLine("Invalid command!");
                     break;
             }
-
         }
-
-
     }
 
     static void LoginMenu()
@@ -105,7 +101,6 @@ public class Program
             string username = Console.ReadLine();
             Console.Write("Enter your Marquette Password: ");
             string password = Console.ReadLine();
-
             authenticatedCustomer = customers.Authenticate(username, password);
             if (authenticatedCustomer != null)
             {
@@ -116,8 +111,6 @@ public class Program
                 Console.WriteLine("Invalid Marquette Username or Password!");
             }
         }
-
-
     }
 
     static void LogOutMenu()
@@ -143,7 +136,6 @@ public class Program
             string username = Console.ReadLine();
             Console.Write("Marquette Password: ");
             string password = Console.ReadLine();
-
             var newCustomer = new Customer
             {
                 FirstName = firstname,
@@ -163,9 +155,7 @@ public class Program
             Console.WriteLine("Please login with your Marquette credentials first!");
             return;
         }
-
         var appointmentList = customerAppointments.Where(o => o.c.Username == authenticatedCustomer.Username);
-
         if(appointmentList.Count() == 0)
         {
             Console.WriteLine("0 room reservations found.");
@@ -174,21 +164,20 @@ public class Program
         {
             foreach(var appointment in appointmentList)
             {
-                Console.WriteLine($"Date & Time: {appointment.a.dateTime}");
+                System.Console.WriteLine($"Date & Time: {appointment.a.dateTime}");
                 System.Console.WriteLine($"Room Number: {appointment.a.roomNumber}");
             }
         }
-        
     }
 
-    static void MakeAppointment()
+    static void MakeAppointment() //the method for making the appointment for the customer
     {
-        if (authenticatedCustomer == null)
+        if (authenticatedCustomer == null) //if the customer is not logged in yet, it rejects the command
         {
             Console.WriteLine("Please login with your Marquette credentials first!");
             return;
         }
-        else
+        else //if the customer is logged in, it asks the customer when they want the appointment and what room number they want
         {
             System.Console.WriteLine("What hour do you wish to make your room reservation?");
             int h = Convert.ToInt32(Console.ReadLine());
@@ -201,18 +190,15 @@ public class Program
             System.Console.WriteLine("Which room number do you want?");
             int r = Convert.ToInt32(Console.ReadLine());
             DateTime dt = new DateTime(2024, m, d, h, min, 00); //year, month, day, hour, minute, second
-            
-            var newAppointment = new Appointment
+            var newAppointment = new Appointment //creating an appointment object out of the information the user gave the program
             {
                 roomNumber = r,
                 dateTime = dt
             };        
-            var ca = new CustomerAppointment(authenticatedCustomer, newAppointment);
-
+            var ca = new CustomerAppointment(authenticatedCustomer, newAppointment); //adds a new customer appointment to the customer appointment list
             customerAppointments.Add(ca);
-
-            Console.WriteLine($"Library room reservation created for room number {r} at {h}:{min} on {m}/{d}");
+            System.Console.WriteLine($"Date & Time for your reservation: {newAppointment.dateTime}");
+            System.Console.WriteLine($"Room Number for your reservation: {newAppointment.roomNumber}");
         }
     }
-
 }
