@@ -9,7 +9,7 @@ public class Program
 
     static void Main(string[] args)
     {
-        Console.WriteLine("Initializing...");
+        Console.WriteLine("Initializing Room Reservation System...");
         Initialize();
         Menu();
     }
@@ -58,11 +58,12 @@ public class Program
 
     static void Menu()
     {
+        System.Console.WriteLine("Welcome to the library room reservation system!");
         bool done = false;
 
         while (!done)
         {
-            Console.WriteLine("Options: Login: 1, Logout: 2, Sign Up: 3, Appointments: 4, Quit: q");
+            Console.WriteLine("Options: Login: 1, Logout: 2, Sign Up: 3, Room Reservations: 4, Make Reservation: 5, Quit: q");
             Console.Write("Choice: ");
             string choice = Console.ReadLine();
 
@@ -80,6 +81,9 @@ public class Program
                 case "4":
                     AppointmentsMenu();
                     break;
+                case "5":
+                    MakeAppointment();
+                    break;                    
                 case "q":
                     done = true;
                     break;
@@ -97,19 +101,19 @@ public class Program
     {
         if(authenticatedCustomer == null)
         {
-            Console.Write("Enter your username: ");
+            Console.Write("Enter your Marquette Username: ");
             string username = Console.ReadLine();
-            Console.Write("Enter your password: ");
+            Console.Write("Enter your Marquette Password: ");
             string password = Console.ReadLine();
 
             authenticatedCustomer = customers.Authenticate(username, password);
             if (authenticatedCustomer != null)
             {
-                Console.WriteLine($"Welcome {authenticatedCustomer.FirstName}");
+                Console.WriteLine($"Welcome back, {authenticatedCustomer.FirstName}!");
             }
             else
             {
-                Console.WriteLine("Invalid username or password");
+                Console.WriteLine("Invalid Marquette Username or Password!");
             }
         }
 
@@ -124,32 +128,39 @@ public class Program
 
     static void SignUpMenu()
     {
-        Console.Write("First Name: ");
-        string firstname = Console.ReadLine();
-        Console.Write("Last Name: ");
-        string lastname = Console.ReadLine();
-        Console.Write("Username: ");
-        string username = Console.ReadLine();
-        Console.Write("Password: ");
-        string password = Console.ReadLine();
-
-        var newCustomer = new Customer
+        if (authenticatedCustomer != null)
         {
-            FirstName = firstname,
-            LastName = lastname,
-            Username = username,
-            Password = password
-        };
-        customers.customerList.Add(newCustomer);
-        Console.WriteLine("Profile created!");
-        
+            Console.WriteLine("Please logout first!");
+            return;
+        }
+        else
+        {
+            Console.Write("First Name: ");
+            string firstname = Console.ReadLine();
+            Console.Write("Last Name: ");
+            string lastname = Console.ReadLine();
+            Console.Write("Marquette Username: ");
+            string username = Console.ReadLine();
+            Console.Write("Marquette Password: ");
+            string password = Console.ReadLine();
+
+            var newCustomer = new Customer
+            {
+                FirstName = firstname,
+                LastName = lastname,
+                Username = username,
+                Password = password
+            };
+            customers.customerList.Add(newCustomer);
+            Console.WriteLine("Library room reservation system profile created!");
+        }
     }
 
     static void AppointmentsMenu()
     {
         if (authenticatedCustomer == null)
         {
-            Console.WriteLine("Please log in first!");
+            Console.WriteLine("Please login with your Marquette credentials first!");
             return;
         }
 
@@ -157,16 +168,49 @@ public class Program
 
         if(appointmentList.Count() == 0)
         {
-            Console.WriteLine("0 appointments found.");
+            Console.WriteLine("0 room reservations found.");
         }
         else
         {
             foreach(var appointment in appointmentList)
             {
-                Console.WriteLine(appointment.a.dateTime);
+                Console.WriteLine($"Date & Time: {appointment.a.dateTime}");
+                System.Console.WriteLine($"Room Number: {appointment.a.roomNumber}");
             }
         }
         
+    }
+
+    static void MakeAppointment()
+    {
+        if (authenticatedCustomer == null)
+        {
+            Console.WriteLine("Please login with your Marquette credentials first!");
+            return;
+        }
+        else
+        {
+            System.Console.WriteLine("What hour do you wish to make your room reservation?");
+            int h = Convert.ToInt32(Console.ReadLine());
+            System.Console.WriteLine("What minute do you wish to make your room reservation?");
+            int min = Convert.ToInt32(Console.ReadLine());
+            System.Console.WriteLine("What month do you wish to make your room reservation?");
+            int m = Convert.ToInt32(Console.ReadLine());
+            System.Console.WriteLine("What day do you wish to make your room reservation?");
+            int d = Convert.ToInt32(Console.ReadLine());
+            System.Console.WriteLine("Which room number do you want?");
+            int r = Convert.ToInt32(Console.ReadLine());
+            DateTime dt = new DateTime(2024, m, d, h, min, 00); //year, month, day, hour, minute, second
+            
+            var newAppointment = new Appointment
+            {
+                roomNumber = r,
+                dateTime = dt
+            };
+            appointments.Add(newAppointment);
+
+            Console.WriteLine($"Library room reservation created for room number {r} at {h}:{min} on {m}/{d}");
+        }
     }
 
 }
