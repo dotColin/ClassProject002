@@ -206,8 +206,10 @@ public class Program
             {
                 roomNumber = r,
                 dateTime = dt
-            };
-            appointments.Add(newAppointment);
+            };        
+            var ca = new CustomerAppointment(authenticatedCustomer, newAppointment);
+
+            customerAppointments.Add(ca);
 
             Console.WriteLine($"Library room reservation created for room number {r} at {h}:{min} on {m}/{d}");
         }
