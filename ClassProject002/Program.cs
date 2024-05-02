@@ -1,4 +1,6 @@
-﻿namespace ClassProject002;
+﻿using System.Runtime.Intrinsics.X86;
+
+namespace ClassProject002;
 
 public class Program
 {
@@ -189,6 +191,46 @@ public class Program
             int d = Convert.ToInt32(Console.ReadLine());
             System.Console.WriteLine("Which room number do you want?");
             int r = Convert.ToInt32(Console.ReadLine());
+            System.Console.WriteLine("What amenities would you like? Options: Whiteboard: 1, AV: 2, Both: 3, None: 4");
+            Console.Write("Choice: ");
+            string choice1 = Console.ReadLine();
+            switch(choice1)
+            {
+                case "1":
+                    Whiteboard();
+                    break;
+                case "2":
+                    AVAmenities();
+                    break;
+                case "3":
+                    BothAmenities();
+                    break;
+                case "4":
+                    NoAmenities();
+                    break;                  
+                default:
+                    Console.WriteLine("Invalid command!");
+                    break;
+            }
+        static void Whiteboard()
+        {
+            Console.WriteLine("We will make sure your room has a whiteboard!");
+        }
+
+        static void AVAmenities()
+        {
+            Console.WriteLine("We will make sure your room has AV amenities!");
+        }
+        static void BothAmenities()
+        {
+            Console.WriteLine("We will make sure your room has both whiteboard and AV amenities!");
+        }
+        static void NoAmenities()
+        {
+            Console.WriteLine("Your room will not have any whiteboards or AV amenities.");
+        }
+
+
             DateTime dt = new DateTime(2024, m, d, h, min, 00); //year, month, day, hour, minute, second
             var newAppointment = new Appointment //creating an appointment object out of the information the user gave the program
             {
