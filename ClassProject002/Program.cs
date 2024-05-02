@@ -179,13 +179,13 @@ public class Program
         }
         else //if the customer is logged in, it asks the customer when they want the appointment and what room number they want
         {
-            System.Console.WriteLine("What hour do you wish to make your room reservation?");
+            System.Console.WriteLine("What hour do you wish to make your room reservation? (00 = 12am | 12 = 12pm)");
             int h = Convert.ToInt32(Console.ReadLine());
-            System.Console.WriteLine("What minute do you wish to make your room reservation?");
+            System.Console.WriteLine("What minute do you wish to make your room reservation? (30 = Half Past | 45 = Quarter Till)");
             int min = Convert.ToInt32(Console.ReadLine());
-            System.Console.WriteLine("What month do you wish to make your room reservation?");
+            System.Console.WriteLine("What month do you wish to make your room reservation? (1 = January | 12 = December)");
             int m = Convert.ToInt32(Console.ReadLine());
-            System.Console.WriteLine("What day do you wish to make your room reservation?");
+            System.Console.WriteLine("What day do you wish to make your room reservation? (1-31)");
             int d = Convert.ToInt32(Console.ReadLine());
             System.Console.WriteLine("Which room number do you want?");
             int r = Convert.ToInt32(Console.ReadLine());
